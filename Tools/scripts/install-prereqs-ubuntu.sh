@@ -83,6 +83,8 @@ if dpkg-query -l "modemmanager"; then
     $APT_GET remove modemmanager
 fi
 $APT_GET update
+# fail fast if its going to want user prompting
+$APT_GET install tzdata
 
 if apt-cache search python-wxgtk3.0 | grep wx; then
     SITL_PKGS+=" python-wxgtk3.0 libtool-bin"
@@ -133,8 +135,10 @@ grep -Fxq "$exportline2" ~/.profile 2>/dev/null || {
 
 apt-cache search arm-none-eabi
 
-(
- cd $ARDUPILOT_ROOT
- git submodule update --init --recursive
-)
+if ! $SKIP_GIT; then
+    (
+        cd $ARDUPILOT_ROOT
+        git submodule update --init --recursive
+    )
+fi
 echo "---------- $0 end ----------"
