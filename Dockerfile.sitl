@@ -1,0 +1,13 @@
+FROM drnic/ardupilot-base
+
+EXPOSE 14550
+
+ADD . /ardupilot
+RUN modules/waf/waf-light configure --board sitl && \
+    modules/waf/waf-light build --target bin/ardurover && \
+    modules/waf/waf-light build --target bin/arduplane && \
+    modules/waf/waf-light build --target bin/arducopter && \
+    modules/waf/waf-light build --target bin/arducopter-heli
+
+ENV CCACHE_MAXSIZE=1G
+ENV PATH /usr/lib/ccache:/ardupilot/Tools:${PATH}
