@@ -92,6 +92,11 @@ class VehicleInfo(object):
                 "default_params_filename": ["default_params/copter.parm",
                                             "default_params/gazebo-iris.parm"],
             },
+            "gazebo-iris-octa": {
+                "waf_target": "bin/arducopter",
+                "default_params_filename": ["default_params/copter.parm",
+                                            "default_params/gazebo-iris-octaquad.parm"],
+            },
             # HELICOPTER
             "heli": {
                 "make_target": "sitl-heli",
